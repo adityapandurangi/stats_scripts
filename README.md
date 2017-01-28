@@ -9,7 +9,7 @@ Requires: docker, and ideally not needing to use 'sudo' to run docker commands
 ## disk_stats.sh
 This script pulls the temperature info and power-on hours for each drive. The DISK_ARRAY variable specifies which disks you want the info for, while the DESCRIPTION is a human readable description for storing in the database. The location of each item im the above two arrays correspond to eachother. (so 'sdc' is 'parity', 'sdd' is 'disk1', and so on).
 
-Requires: smartctl
+Requires: smartctl  
 Note: script template + ideas taken from RAINMAN on the unraid forums: https://lime-technology.com/forum/index.php?topic=52220
 
 ## query_ups.sh
