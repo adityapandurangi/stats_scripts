@@ -23,20 +23,20 @@ DESCRIPTION=( parity disk1 disk2 disk3 cache )
 i=0
 for DISK in "${DISK_ARRAY[@]}"
 do
-	smartctl -n standby -A /dev/${DISK} | grep -E "Power_On_Hours" | awk '{ print $10 }' | while read POWERONHOURS
-	do
-		curl -s -i -XPOST "http://$INFLUX_HOST:$PORT/write?db=$DB" --data-binary "$MEASUREMENT_HOURS,host=$MEASUREMENT_HOST,disk=${DESCRIPTION[$i]} value=${POWERONHOURS}"
-	done
-	((i++))
+    smartctl -n standby -A /dev/${DISK} | grep -E "Power_On_Hours" | awk '{ print $10 }' | while read POWERONHOURS
+    do
+        curl -s -i -XPOST "http://$INFLUX_HOST:$PORT/write?db=$DB" --data-binary "$MEASUREMENT_HOURS,host=$MEASUREMENT_HOST,disk=${DESCRIPTION[$i]} value=${POWERONHOURS}"
+    done
+    ((i++))
 done
 
 ## disk temps
 j=0
 for DISK in "${DISK_ARRAY[@]}"
 do
-	smartctl -n standby -A /dev/${DISK} | grep -E "Temperature_Celsius" | awk '{ print $10 }' | while read DISKTEMP
-	do
-		curl -s -i -XPOST "http://$INFLUX_HOST:$PORT/write?db=$DB" --data-binary "$MEASUREMENT_TEMPS,host=$MEASUREMENT_HOST,disk=${DESCRIPTION[$j]} value=${DISKTEMP}"
-	done
-	((j++))
+    smartctl -n standby -A /dev/${DISK} | grep -E "Temperature_Celsius" | awk '{ print $10 }' | while read DISKTEMP
+    do
+        curl -s -i -XPOST "http://$INFLUX_HOST:$PORT/write?db=$DB" --data-binary "$MEASUREMENT_TEMPS,host=$MEASUREMENT_HOST,disk=${DESCRIPTION[$j]} value=${DISKTEMP}"
+    done
+    ((j++))
 done
