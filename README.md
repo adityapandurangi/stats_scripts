@@ -4,7 +4,7 @@ Repo of scripts for collecting various stats for grafana dashboards. The individ
 ## current_docker_containers.sh
 This script lists the name and status of the docker containers running on the machine
 
-*Requires*: docker
+*Requires*: docker  
 *Optional but ideal*: not needing to use 'sudo' to run docker commands (see http://askubuntu.com/questions/477551/how-can-i-use-docker-without-sudo)
 
 ## disk_stats.sh
