@@ -12,6 +12,8 @@ MEASUREMENT_HOST=''
 MEASUREMENT_UP='docker_containers_running'
 ## END_CONFIG ##
 
+all_containers_up=1
+
 # the awk skips the first line of output, which are the column headers
 OUTPUT="$(docker ps -a --format "table {{.Names}}\t{{.Status}}" | awk 'NR > 1')"
   while read i
