@@ -25,7 +25,14 @@ OUTPUT="$(docker ps -a --format "table {{.Names}}\t{{.Status}}" | awk 'NR > 1')"
         all_containers_up=0
     fi
 
-    curl -s -i -XPOST "http://$INFLUX_HOST:$PORT/write?db=$DB" --data-binary "$MEASUREMENT,host=$MEASUREMENT_HOST,container=$container_name status=$container_status"
+    # build url for each container status
+    post_url=$post_url"$MEASUREMENT,host=$MEASUREMENT_HOST,container=$container_name status=$container_status
+    "
   done <<< "$OUTPUT"
 
-  curl -s -i -XPOST "http://$INFLUX_HOST:$PORT/write?db=$DB" --data-binary "$MEASUREMENT_UP,host=$MEASUREMENT_HOST status=$all_containers_up"
+  # create measurement for all container status
+  post_url=$post_url"$MEASUREMENT_UP,host=$MEASUREMENT_HOST status=$all_containers_up
+"
+
+  # post to influxdb
+  curl -i -XPOST "http://$INFLUX_HOST:$PORT/write?db=$DB" --data-binary "$post_url"
