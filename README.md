@@ -24,7 +24,7 @@ This script pulls that smart status (passing or failure) for the desk. The DISK_
 
 *Requires*: smartctl
 
-## disk_smart_status.sh
+## query_sensors.pl
 This script is used for pulling sensor info, such as CPU temps and fan speeds. It's been tested on unRAID but not any other systems
 
 *Requires* lm-sensors (I think)
