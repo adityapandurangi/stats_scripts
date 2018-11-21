@@ -23,3 +23,8 @@ This script uses 'apcaccess' to pull ups info. The items_of_interest hash needs 
 This script pulls that smart status (passing or failure) for the desk. The DISK_ARRAY variable specifies which disks you want the info for, while the DESCRIPTION is a human readable description for storing in the database. The location of each item in the above two arrays correspond to each other. (so 'sdc' is 'parity', 'sdd' is 'disk1', and so on).
 
 *Requires*: smartctl
+
+## disk_smart_status.sh
+This script is used for pulling sensor info, such as CPU temps and fan speeds. It's been tested on unRAID but not any other systems
+
+*Requires* lm-sensors (I think)
