@@ -17,17 +17,19 @@ declare -A items_of_interest=(["LOADPCT"]=0 ["LINEV"]=1 ["TIMELEFT"]=1 ["BCHARGE
 # Associations of measurements to a human readable item
 declare -A items_human_readable=(["LOADPCT"]="battload" ["LINEV"]="inputvoltage" ["TIMELEFT"]="runtime" ["BCHARGE"]="battcharge")
 ### END CONFIG ###
+post_url=
 
-apcaccess status |
-  while read i
-  do
+while read i;
+do
     measurement_name=$(awk '{print $1}' <<< "$i")
 
     if test "${items_of_interest[$measurement_name]}"
     then
-      measurement_value=$(awk '{print $3}' <<< "$i")
-      measurement_human_readable=${items_human_readable[$measurement_name]}
+        measurement_value=$(awk '{print $3}' <<< "$i")
+        measurement_human_readable=${items_human_readable[$measurement_name]}
 
-      curl -s -i -XPOST "http://$INFLUX_HOST:$PORT/write?db=$DB" --data-binary "$MEASUREMENT,host=$MEASUREMENT_HOST,sensor=$measurement_human_readable value=$measurement_value"
+        post_url=$post_url"$MEASUREMENT,host=$MEASUREMENT_HOST,sensor=$measurement_human_readable value=$measurement_value"$'\n'
     fi
-  done
+done <<<$(apcaccess status)
+
+curl -s -i -XPOST "http://$INFLUX_HOST:$PORT/write?db=$DB" --data-binary "$post_url"
