@@ -17,7 +17,7 @@ This script pulls the temperature info and power-on hours for each drive. The DI
 ## query_ups.sh
 This script uses 'apcaccess' to pull ups info. The items_of_interest hash needs to be filled in with the info you want to specifically pull.
 
-*Requires*: apcaccess
+*Requires*: apcupsd
 
 ## disk_smart_status.sh
 This script pulls that smart status (passing or failure) for the desk. The DISK_ARRAY variable specifies which disks you want the info for, while the DESCRIPTION is a human readable description for storing in the database. The location of each item in the above two arrays correspond to each other. (so 'sdc' is 'parity', 'sdd' is 'disk1', and so on).
