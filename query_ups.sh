@@ -30,6 +30,6 @@ do
 
         post_url=$post_url"$MEASUREMENT,host=$MEASUREMENT_HOST,sensor=$measurement_human_readable value=$measurement_value"$'\n'
     fi
-done <<<$(apcaccess status)
+done <<<$(/sbin/apcaccess status)
 
 curl -s -i -XPOST "http://$INFLUX_HOST:$PORT/write?db=$DB" --data-binary "$post_url"
